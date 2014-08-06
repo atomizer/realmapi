@@ -3,7 +3,9 @@ var request = require('request')
 var qs = require('querystring')
 var crypto = require('crypto')
 
-// CR, aka 'credentials': for web - ['guid', 'password'], kong - ['guid', null, 'secret']
+// CR, aka 'credentials': an object to expand params with
+// for example, for web: { guid: 'myemail', password: '1234' }
+// for now, caller is responsible for these keys to be sufficient
 
 // special values in the template:
 // '!': required field
@@ -137,13 +139,17 @@ function query(path, options, callback) {
 		if (params[k] === null) delete params[k]
 	}
 	params.ignore = Math.floor(Math.random() * 1e7)
-	var cr = params.CR
-	if (cr) {
+	if (params.hasOwnProperty('CR')) {
+		var cr = params.CR
 		delete params.CR
-		if (Array.isArray(cr)) {
+		if (Array.isArray(cr)) { // old style, deprecated
 			params.guid = cr[0]
 			if (typeof cr[1] == 'string') params.password = cr[1]
 			if (cr[2]) params.secret = cr[2]
+		} else if (typeof cr == 'object') {
+			for (k in cr) {
+				params[k] = cr[k]
+			}
 		} else if (typeof cr == 'string') {
 			params.guid = cr
 			params.password = ''
