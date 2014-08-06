@@ -1,6 +1,6 @@
 {
   "name": "realmapi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "RotMG API wrapper",
   "main": "index.js",
   "scripts": {
