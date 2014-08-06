@@ -34,7 +34,13 @@ var paths = {
 		purchasePackage: { packageId: '!', CR: '!' },
 		purchaseSkin: { skinType: '!', CR: '!' },
 		getCredits: { CR: '!' },
-		changeEmail: { newGuid: '!', CR: '!' }
+		changeEmail: { newGuid: '!', CR: '!' },
+		purchaseMysteryBox: {
+			CR: '!',
+			boxId: '!',
+			price: '!', // if on sale, substitute with appropriate values
+			currency: '!'
+		}
 	},
 	arena: {
 		getPersonalBest: { CR: '!' },
@@ -73,6 +79,9 @@ var paths = {
 		listMembers: { num: 50, offset: 0, CR: '!' },
 		getBoard: { CR: '!' },
 		setBoard: { board: '!', CR: '!' }
+	},
+	mysterybox: {
+		getBoxes: { language: 'en', version: 0,	CR: '!' }
 	},
 	package: {
 		getPackages: { CR: null }
