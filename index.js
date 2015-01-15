@@ -42,7 +42,8 @@ var paths = {
 			boxId: '!',
 			price: '!', // if on sale, substitute with appropriate values
 			currency: '!'
-		}
+		},
+		acceptTOS: { CR: '!' }
 	},
 	arena: {
 		getPersonalBest: { CR: '!' },
@@ -82,16 +83,20 @@ var paths = {
 		getBoard: { CR: '!' },
 		setBoard: { board: '!', CR: '!' }
 	},
+	migrate: {
+		doMigration: { CR: '!' },
+		progress: { CR: '!' },
+	},
 	mysterybox: {
 		getBoxes: { language: 'en', version: 0,	CR: '!' }
 	},
 	package: {
-		getPackages: { CR: null }
+		getPackages: { CR: null, language: 'en' }
 	}
 }
 
 var HOST = {
-	production: 'realmofthemadgod.appspot.com',
+	production: 'realmofthemadgodhrd.appspot.com',
 	testing: 'rotmgtesting.appspot.com'
 }
 
@@ -123,7 +128,7 @@ function query(path, options, callback) {
 	if (!sample) return callback('unknown root')
 	sample = sample[path[1]]
 	if (!sample) return callback('unknown path')
-	
+
 	var params = {}
 	for (var k in sample) {
 		params[k] = sample[k]
@@ -181,7 +186,7 @@ function query(path, options, callback) {
 			r = JSON.parse(body)
 		} catch (e) {}
 		if (r) return callback(null, r)
-		
+
 		// JSON failed, try XML
 		parser.reset()
 		try {
