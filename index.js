@@ -50,7 +50,7 @@ var paths = {
 		getRecords: {
 			CR: '!',
 			type: 'alltime' // 'weekly', 'personal'
-		},
+		}
 	},
 	char: {
 		list: {
@@ -85,7 +85,7 @@ var paths = {
 	},
 	migrate: {
 		doMigration: { CR: '!' },
-		progress: { CR: '!' },
+		progress: { CR: '!' }
 	},
 	mysterybox: {
 		getBoxes: { language: 'en', version: 0,	CR: '!' }
@@ -172,10 +172,10 @@ function query(path, options, callback) {
 	}
 	var uri = 'https://' + host + '/' + path.join('/')
 
-	var req = request.post({
+	request.post({
 		uri: uri,
 		body: qs.stringify(params)
-	}, function (e, res, body) {
+	}, function(e, res, body) {
 		if (e) return callback(e)
 		if (res.statusCode != 200) {
 			return callback('HTTP ' + res.statusCode)
@@ -184,15 +184,15 @@ function query(path, options, callback) {
 		var r = ''
 		try {
 			r = JSON.parse(body)
-		} catch (e) {}
+		} catch (err) { /* do nothing */ }
 		if (r) return callback(null, r)
 
 		// JSON failed, try XML
 		parser.reset()
 		try {
 			parser.parseString(body)
-		} catch(e) {
-			return callback(e)
+		} catch(err) {
+			return callback(err)
 		}
 		var o = parser.resultObject
 
