@@ -196,6 +196,7 @@ function query(path, options, callback) {
 		}
 		var o = parser.resultObject
 
+		if (!o) return callback('[Empty]')
 		if (o.Failure) return callback('[Failure]', o)
 		if (o.Error) return callback('[Error] ' + o.Error, o)
 		callback(null, o)
